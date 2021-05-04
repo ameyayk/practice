@@ -65,7 +65,7 @@ describe('deck of cards test case', () => {
     const hands = [
       {
         card: {
-          value: 1,
+          value: 2,
           suite: 'SPADES',
         },
         playerIndex: 4,
@@ -95,7 +95,7 @@ describe('deck of cards test case', () => {
     const winningHand = evaluateHand(hands, trumpSuite);
     expect(winningHand).to.deep.eql({
       card: {
-        value: 1,
+        value: 2,
         suite: 'SPADES',
       },
       playerIndex: 4,
@@ -108,7 +108,7 @@ describe('deck of cards test case', () => {
     const hands = [
       {
         card: {
-          value: 1,
+          value: 2,
           suite: 'CLUBS',
         },
         playerIndex: 2,
@@ -151,7 +151,7 @@ describe('deck of cards test case', () => {
     const hands = [
       {
         card: {
-          value: 1,
+          value: 2,
           suite: 'CLUBS',
         },
         playerIndex: 1,
