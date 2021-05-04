@@ -36,24 +36,24 @@ describe('deck of cards test case', () => {
     }
   });
 
-  xit('createDeck should return a pack of 52 cards', () => {
+  it('createDeck should return a pack of 52 cards', () => {
     const deck = createDeck();
     expect(deck).to.have.lengthOf(52);
   });
 
-  xit('shuffledDeck should create a shuffled deck properly', () => {
+  it('shuffledDeck should create a shuffled deck properly', () => {
     const deck = createDeck();
     const randomizedDeck = shuffledDeck(deck);
     assert.notSameOrderedMembers(deck, randomizedDeck);
   });
 
-  xit('choosePlayingOrder should get random playing order', () => {
+  it('choosePlayingOrder should get random playing order', () => {
     const numberOfPlayers = 4;
     const playingOrder1 = choosePlayingOrder(numberOfPlayers);
     const playingOrder2 = choosePlayingOrder(numberOfPlayers);
     assert.notSameOrderedMembers(playingOrder1, playingOrder2);
   });
-  xit('evaluateHand should return the winning hand in case trump suite is played', () => {
+  it('evaluateHand should return the winning hand in case trump suite is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
@@ -109,7 +109,7 @@ describe('deck of cards test case', () => {
     });
   });
 
-  it('evaluateHand should return the winning hand in case of when neither trump suite nor sui', () => {
+  it('evaluateHand should return the winning hand in case of when neither trump suite nor more than 1 suite of hand card is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
