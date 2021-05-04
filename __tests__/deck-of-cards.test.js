@@ -13,13 +13,13 @@ const evaluateHand = doc.__get__('evaluateHand');
 const { playGame } = require('../lib/deck-of-cards');
 
 describe('deck of cards test case', () => {
-  xit('chooseTrump should return the trump suite', () => {
+  it('chooseTrump should return the trump suite', () => {
     const actual = chooseTrump();
     expect(['HEARTS', 'CLUBS', 'SPADES', 'DIAMONDS']).to.include(actual);
     expect(actual).to.not.eql('NON_EXISTINg');
   });
 
-  xit('dealCards should properly distribute 13 cards amongs the 4 players', () => {
+  it('dealCards should properly distribute 13 cards amongs the 4 players', () => {
     const deck = shuffledDeck();
     const numberOfPlayers = 4;
     const hands = dealCards(numberOfPlayers, deck);
@@ -30,7 +30,7 @@ describe('deck of cards test case', () => {
     expect(hands[3].length).to.eql(13);
   });
 
-  xit('dealCards should properly distribute 8 cards amongs the 6 players', () => {
+  it('dealCards should properly distribute 8 cards amongs the 6 players', () => {
     const numberOfPlayers = 6;
     const deck = shuffledDeck();
     const hands = dealCards(numberOfPlayers, deck);
@@ -42,12 +42,12 @@ describe('deck of cards test case', () => {
     expect(hands[5].length).to.eql(8);
   });
 
-  xit('createDeck should return a pack of 52 cards', () => {
+  it('createDeck should return a pack of 52 cards', () => {
     const deck = createDeck();
     expect(deck).to.have.lengthOf(52);
   });
 
-  xit('shuffledDeck should create a shuffled deck properly', () => {
+  it('shuffledDeck should create a shuffled deck properly', () => {
     const deck = createDeck();
     const randomizedDeck = shuffledDeck(deck);
     assert.notSameOrderedMembers(deck, randomizedDeck);
@@ -59,7 +59,7 @@ describe('deck of cards test case', () => {
     const playingOrder2 = choosePlayingOrder(numberOfPlayers);
     assert.notSameOrderedMembers(playingOrder1, playingOrder2);
   });
-  xit('evaluateHand should return the winning hand in case trump suite is played', () => {
+  it('evaluateHand should return the winning hand in case trump suite is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
@@ -94,12 +94,15 @@ describe('deck of cards test case', () => {
     ];
     const winningHand = evaluateHand(hands, trumpSuite);
     expect(winningHand).to.deep.eql({
-      value: 1,
-      suite: 'SPADES',
+      card: {
+        value: 1,
+        suite: 'SPADES',
+      },
+      playerIndex: 4,
     });
   });
 
-  xit('evaluateHand should return the winning hand in case of higest suite of hand is played', () => {
+  it('evaluateHand should return the winning hand in case of higest suite of hand is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
@@ -134,8 +137,11 @@ describe('deck of cards test case', () => {
     ];
     const winningHand = evaluateHand(hands, trumpSuite);
     expect(winningHand).to.deep.eql({
-      value: 5,
-      suite: 'CLUBS',
+      card: {
+        value: 5,
+        suite: 'CLUBS',
+      },
+      playerIndex: 3,
     });
   });
 
