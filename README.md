@@ -3,7 +3,7 @@
 1. Node LTS
 2. npm 6+
 
-# Installing depencies
+# Installing dependencies
 
 1. `npm install`
 
