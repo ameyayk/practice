@@ -11,7 +11,9 @@ const choosePlayingOrder = doc.__get__('choosePlayingOrder');
 const evaluateHand = doc.__get__('evaluateHand');
 const areArraysEqualOrdered = doc.__get__('areArraysEqualOrdered');
 const findIndexOfCardOfHighestFaceValue = doc.__get__('findIndexOfCardOfHighestFaceValue');
-const findOptimumCardMatchingSuiteOfHand = doc.__get__('findOptimumCardMatchingSuiteOfHand');
+const findIndexOfOptimumCardMatchingSuiteOfHand = doc.__get__(
+  'findIndexOfOptimumCardMatchingSuiteOfHand',
+);
 
 const { playGame } = require('../lib/deck-of-cards');
 
@@ -251,6 +253,42 @@ describe('deck of cards test case', () => {
 
     const actual = findIndexOfCardOfHighestFaceValue(hands);
     expect(actual).to.eql(4);
+  });
+
+  xit('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => {
+    const currentRound = [
+      {
+        card: {
+          value: 2,
+          suite: 'SPADES',
+        },
+        playerIndex: 4,
+      },
+      {
+        card: {
+          value: 13,
+          suite: 'HEARTS',
+        },
+        playerIndex: 2,
+      },
+    ];
+    const hand = [
+      { value: 5, suite: 'SPADES' },
+      { value: 2, suite: 'SPADES' },
+      { value: 7, suite: 'CLUBS' },
+      { value: 9, suite: 'DIAMONDS' },
+      { value: 14, suite: 'SPADES' },
+      { value: 14, suite: 'CLUBS' },
+      { value: 11, suite: 'SPADES' },
+      { value: 12, suite: 'DIAMONDS' },
+      { value: 3, suite: 'CLUBS' },
+      { value: 3, suite: 'SPADES' },
+      { value: 3, suite: 'HEARTS' },
+      { value: 7, suite: 'DIAMONDS' },
+      { value: 4, suite: 'DIAMONDS' },
+    ];
+    const indexToPlay = findIndexOfOptimumCardMatchingSuiteOfHand(hand, currentRound);
+    expect(indexToPlay).to.be.eql();
   });
 
   // it('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => { });
