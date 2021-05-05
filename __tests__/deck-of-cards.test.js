@@ -9,6 +9,7 @@ const createDeck = doc.__get__('createDeck');
 const shuffledDeck = doc.__get__('shuffledDeck');
 const choosePlayingOrder = doc.__get__('choosePlayingOrder');
 const evaluateHand = doc.__get__('evaluateHand');
+const areArraysEqualOrdered = doc.__get__('areArraysEqualOrdered');
 
 const { playGame } = require('../lib/deck-of-cards');
 
@@ -191,5 +192,19 @@ describe('deck of cards test case', () => {
   it('playGame should exercise the game', () => {
     const numberOfPlayers = 4;
     playGame(numberOfPlayers);
+  });
+
+  it('areArraysEqualOrdered should return true for ordered arrays', () => {
+    const a = [1, 2, 3, 4];
+    const b = [1, 2, 3, 4];
+    const areEqual = areArraysEqualOrdered(a, b);
+    expect(areEqual).to.eql(true);
+  });
+
+  it('areArraysEqualOrdered should return false for unordered arrays', () => {
+    const a = [2, 3, 1, 4];
+    const b = [1, 2, 3, 4];
+    const areEqual = areArraysEqualOrdered(a, b);
+    expect(areEqual).to.eql(false);
   });
 });
