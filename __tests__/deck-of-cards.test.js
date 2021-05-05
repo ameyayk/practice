@@ -58,6 +58,7 @@ describe('deck of cards test case', () => {
     const numberOfPlayers = 4;
     const playingOrder1 = choosePlayingOrder(numberOfPlayers);
     const playingOrder2 = choosePlayingOrder(numberOfPlayers);
+
     assert.notSameOrderedMembers(playingOrder1, playingOrder2);
   });
   it('evaluateHand should return the winning hand in case trump suite is played', () => {
