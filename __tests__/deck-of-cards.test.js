@@ -10,6 +10,8 @@ const shuffledDeck = doc.__get__('shuffledDeck');
 const choosePlayingOrder = doc.__get__('choosePlayingOrder');
 const evaluateHand = doc.__get__('evaluateHand');
 const areArraysEqualOrdered = doc.__get__('areArraysEqualOrdered');
+const findIndexOfCardOfHighestFaceValue = doc.__get__('findIndexOfCardOfHighestFaceValue');
+const findOptimumCardMatchingSuiteOfHand = doc.__get__('findOptimumCardMatchingSuiteOfHand');
 
 const { playGame } = require('../lib/deck-of-cards');
 
@@ -208,4 +210,50 @@ describe('deck of cards test case', () => {
     const areEqual = areArraysEqualOrdered(a, b);
     expect(areEqual).to.eql(false);
   });
+
+  it('findCardOfHighestFaceValue should return the maximum faceValue card', () => {
+    const hands = [
+      { value: 5, suite: 'SPADES' },
+      { value: 2, suite: 'SPADES' },
+      { value: 14, suite: 'CLUBS' },
+      { value: 13, suite: 'SPADES' },
+      { value: 7, suite: 'CLUBS' },
+      { value: 9, suite: 'DIAMONDS' },
+      { value: 11, suite: 'SPADES' },
+      { value: 12, suite: 'DIAMONDS' },
+      { value: 3, suite: 'CLUBS' },
+      { value: 3, suite: 'SPADES' },
+      { value: 3, suite: 'HEARTS' },
+      { value: 7, suite: 'DIAMONDS' },
+      { value: 4, suite: 'DIAMONDS' },
+    ];
+
+    const actual = findIndexOfCardOfHighestFaceValue(hands);
+    expect(actual).to.eql(2);
+  });
+
+  it('findCardOfHighestFaceValue should return the first maximum faceValue card in case of collision', () => {
+    const hands = [
+      { value: 5, suite: 'SPADES' },
+      { value: 2, suite: 'SPADES' },
+      { value: 7, suite: 'CLUBS' },
+      { value: 9, suite: 'DIAMONDS' },
+      { value: 14, suite: 'SPADES' },
+      { value: 14, suite: 'CLUBS' },
+      { value: 11, suite: 'SPADES' },
+      { value: 12, suite: 'DIAMONDS' },
+      { value: 3, suite: 'CLUBS' },
+      { value: 3, suite: 'SPADES' },
+      { value: 3, suite: 'HEARTS' },
+      { value: 7, suite: 'DIAMONDS' },
+      { value: 4, suite: 'DIAMONDS' },
+    ];
+
+    const actual = findIndexOfCardOfHighestFaceValue(hands);
+    expect(actual).to.eql(4);
+  });
+
+  // it('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => { });
+
+  // it('findOptimumCardMatchingSuiteOfHand should play the min value of suite of hand if there ', () => { });
 });
