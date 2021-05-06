@@ -11,20 +11,18 @@ const choosePlayingOrder = doc.__get__('choosePlayingOrder');
 const evaluateHand = doc.__get__('evaluateHand');
 const areArraysEqualOrdered = doc.__get__('areArraysEqualOrdered');
 const findIndexOfCardOfHighestFaceValue = doc.__get__('findIndexOfCardOfHighestFaceValue');
-const findIndexOfOptimumCardMatchingSuiteOfHand = doc.__get__(
-  'findIndexOfOptimumCardMatchingSuiteOfHand',
-);
+const findIndexOfOptimumCardToPlay = doc.__get__('findIndexOfOptimumCardToPlay');
 
 const { playGame } = require('../lib/deck-of-cards');
 
 describe('deck of cards test case', () => {
-  xit('chooseTrump should return the trump suite', () => {
+  it('chooseTrump should return the trump suite', () => {
     const actual = chooseTrump();
     expect(['HEARTS', 'CLUBS', 'SPADES', 'DIAMONDS']).to.include(actual);
     expect(actual).to.not.eql('NON_EXISTINg');
   });
 
-  xit('dealCards should properly distribute 13 cards amongs the 4 players', () => {
+  it('dealCards should properly distribute 13 cards amongs the 4 players', () => {
     const deck = shuffledDeck();
     const numberOfPlayers = 4;
     const hands = dealCards(numberOfPlayers, deck);
@@ -35,7 +33,7 @@ describe('deck of cards test case', () => {
     expect(hands[3].length).to.eql(13);
   });
 
-  xit('dealCards should properly distribute 8 cards amongs the 6 players', () => {
+  it('dealCards should properly distribute 8 cards amongs the 6 players', () => {
     const numberOfPlayers = 6;
     const deck = shuffledDeck();
     const hands = dealCards(numberOfPlayers, deck);
@@ -47,25 +45,25 @@ describe('deck of cards test case', () => {
     expect(hands[5].length).to.eql(8);
   });
 
-  xit('createDeck should return a pack of 52 cards', () => {
+  it('createDeck should return a pack of 52 cards', () => {
     const deck = createDeck();
     expect(deck).to.have.lengthOf(52);
   });
 
-  xit('shuffledDeck should create a shuffled deck properly', () => {
+  it('shuffledDeck should create a shuffled deck properly', () => {
     const deck = createDeck();
     const randomizedDeck = shuffledDeck(deck);
     assert.notSameOrderedMembers(deck, randomizedDeck);
   });
 
-  xit('choosePlayingOrder should get random playing order', () => {
+  it('choosePlayingOrder should get random playing order', () => {
     const numberOfPlayers = 4;
     const playingOrder1 = choosePlayingOrder(numberOfPlayers);
     const playingOrder2 = choosePlayingOrder(numberOfPlayers);
 
     assert.notSameOrderedMembers(playingOrder1, playingOrder2);
   });
-  xit('evaluateHand should return the winning hand in case trump suite is played', () => {
+  it('evaluateHand should return the winning hand in case trump suite is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
@@ -108,7 +106,7 @@ describe('deck of cards test case', () => {
     });
   });
 
-  xit('evaluateHand should return the winning hand in case of higest suite of hand is played', () => {
+  it('evaluateHand should return the winning hand in case of higest suite of hand is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
@@ -151,7 +149,7 @@ describe('deck of cards test case', () => {
     });
   });
 
-  xit('evaluateHand should return the winning hand in case of when neither trump suite nor more than 1 suite of hand card is played', () => {
+  it('evaluateHand should return the winning hand in case of when neither trump suite nor more than 1 suite of hand card is played', () => {
     const trumpSuite = 'SPADES';
 
     const hands = [
@@ -194,26 +192,26 @@ describe('deck of cards test case', () => {
     });
   });
 
-  xit('playGame should exercise the game', () => {
+  it('playGame should exercise the game', () => {
     const numberOfPlayers = 4;
     playGame(numberOfPlayers);
   });
 
-  xit('areArraysEqualOrdered should return true for ordered arrays', () => {
+  it('areArraysEqualOrdered should return true for ordered arrays', () => {
     const a = [1, 2, 3, 4];
     const b = [1, 2, 3, 4];
     const areEqual = areArraysEqualOrdered(a, b);
     expect(areEqual).to.eql(true);
   });
 
-  xit('areArraysEqualOrdered should return false for unordered arrays', () => {
+  it('areArraysEqualOrdered should return false for unordered arrays', () => {
     const a = [2, 3, 1, 4];
     const b = [1, 2, 3, 4];
     const areEqual = areArraysEqualOrdered(a, b);
     expect(areEqual).to.eql(false);
   });
 
-  xit('findCardOfHighestFaceValue should return the maximum faceValue card', () => {
+  it('findCardOfHighestFaceValue should return the maximum faceValue card', () => {
     const hands = [
       { value: 5, suite: 'SPADES' },
       { value: 2, suite: 'SPADES' },
@@ -234,7 +232,7 @@ describe('deck of cards test case', () => {
     expect(actual).to.eql(2);
   });
 
-  xit('findCardOfHighestFaceValue should return the first maximum faceValue card in case of collision', () => {
+  it('findCardOfHighestFaceValue should return the first maximum faceValue card in case of collision', () => {
     const hands = [
       { value: 5, suite: 'SPADES' },
       { value: 2, suite: 'SPADES' },
@@ -255,7 +253,7 @@ describe('deck of cards test case', () => {
     expect(actual).to.eql(4);
   });
 
-  it('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => {
+  it('findIndexOfOptimumCardToPlay should play the max value of suite of hand in order to win when not starting the round', () => {
     const trumpSuite = 'DIAMONDS';
     const currentRound = [
       {
@@ -275,7 +273,7 @@ describe('deck of cards test case', () => {
     ];
     const hand = [
       { value: 5, suite: 'SPADES' },
-      { value: 2, suite: 'SPADES' },
+      { value: 2, suite: 'HEARTS' },
       { value: 7, suite: 'CLUBS' },
       { value: 9, suite: 'DIAMONDS' },
       { value: 14, suite: 'SPADES' },
@@ -288,11 +286,83 @@ describe('deck of cards test case', () => {
       { value: 7, suite: 'DIAMONDS' },
       { value: 4, suite: 'DIAMONDS' },
     ];
-    const indexToPlay = findIndexOfOptimumCardMatchingSuiteOfHand(hand, currentRound, trumpSuite);
-    expect(indexToPlay).to.be.eql(7);
+    const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
+    expect(indexToPlay).to.be.eql(9);
   });
 
-  // xit('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => { });
+  it('findIndexOfOptimumCardToPlay should play the max value trump suite when no trump card is hitherto played in the current round', () => {
+    const trumpSuite = 'DIAMONDS';
+    const currentRound = [
+      {
+        card: {
+          value: 2,
+          suite: 'SPADES',
+        },
+        playerIndex: 4,
+      },
+      {
+        card: {
+          value: 5,
+          suite: 'HEARTS',
+        },
+        playerIndex: 2,
+      },
+    ];
+    const hand = [
+      { value: 5, suite: 'SPADES' },
+      { value: 2, suite: 'HEARTS' },
+      { value: 7, suite: 'CLUBS' },
+      { value: 9, suite: 'DIAMONDS' },
+      { value: 14, suite: 'SPADES' },
+      { value: 14, suite: 'CLUBS' },
+      { value: 11, suite: 'SPADES' },
+      { value: 12, suite: 'DIAMONDS' },
+      { value: 3, suite: 'CLUBS' },
+      { value: 3, suite: 'SPADES' },
+      { value: 3, suite: 'HEARTS' },
+      { value: 7, suite: 'DIAMONDS' },
+      { value: 4, suite: 'DIAMONDS' },
+    ];
+    const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
+    expect(indexToPlay).to.be.eql(9);
+  });
+
+  it('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => {
+    const trumpSuite = 'DIAMONDS';
+    const currentRound = [
+      {
+        card: {
+          value: 4,
+          suite: 'SPADES',
+        },
+        playerIndex: 4,
+      },
+      {
+        card: {
+          value: 5,
+          suite: 'HEARTS',
+        },
+        playerIndex: 2,
+      },
+    ];
+    const hand = [
+      { value: 2, suite: 'HEARTS' },
+      { value: 7, suite: 'CLUBS' },
+      { value: 9, suite: 'DIAMONDS' },
+      { value: 14, suite: 'SPADES' },
+      { value: 14, suite: 'CLUBS' },
+      { value: 11, suite: 'SPADES' },
+      { value: 12, suite: 'DIAMONDS' },
+      { value: 3, suite: 'CLUBS' },
+      { value: 3, suite: 'SPADES' },
+      { value: 3, suite: 'HEARTS' },
+      { value: 7, suite: 'DIAMONDS' },
+      { value: 4, suite: 'DIAMONDS' },
+      { value: 5, suite: 'SPADES' },
+    ];
+    const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
+    expect(indexToPlay).to.be.eql(12);
+  });
 
   // xit('findOptimumCardMatchingSuiteOfHand should play the min value of suite of hand if there ', () => { });
 });
