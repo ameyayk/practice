@@ -253,7 +253,7 @@ describe('deck of cards test case', () => {
     expect(actual).to.eql(4);
   });
 
-  it('findIndexOfOptimumCardToPlay should play the max value of suite of hand in order to win when not starting the round', () => {
+  it('findIndexOfOptimumCardToPlay should play the minimum value hand of suite more than the suite of hand already played in the current round', () => {
     const trumpSuite = 'DIAMONDS';
     const currentRound = [
       {
@@ -288,9 +288,10 @@ describe('deck of cards test case', () => {
     ];
     const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
     expect(indexToPlay).to.be.eql(9);
+    // 3 of spades
   });
 
-  it('findIndexOfOptimumCardToPlay should play the max value trump suite when no trump card is hitherto played in the current round', () => {
+  it('findIndexOfOptimumCardToPlay should play the minimum value trump card which is greater than the highest value trump card already played current round', () => {
     const trumpSuite = 'DIAMONDS';
     const currentRound = [
       {
@@ -303,7 +304,14 @@ describe('deck of cards test case', () => {
       {
         card: {
           value: 5,
-          suite: 'HEARTS',
+          suite: 'DIAMONDS',
+        },
+        playerIndex: 2,
+      },
+      {
+        card: {
+          value: 6,
+          suite: 'DIAMONDS',
         },
         playerIndex: 2,
       },
@@ -324,7 +332,7 @@ describe('deck of cards test case', () => {
       { value: 4, suite: 'DIAMONDS' },
     ];
     const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
-    expect(indexToPlay).to.be.eql(9);
+    expect(indexToPlay).to.be.eql(12);
   });
 
   it('findOptimumCardMatchingSuiteOfHand should play the max value of suite of hand in order to win', () => {
