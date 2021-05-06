@@ -2,6 +2,7 @@ const { expect, assert } = require('chai');
 const rewire = require('rewire');
 
 const doc = rewire('../lib/deck-of-cards');
+const consola = require('consola');
 
 const chooseTrump = doc.__get__('chooseTrump');
 const dealCards = doc.__get__('dealCards');
@@ -288,7 +289,6 @@ describe('deck of cards test case', () => {
     ];
     const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
     expect(indexToPlay).to.be.eql(9);
-    // 3 of spades
   });
 
   it('findIndexOfOptimumCardToPlay should play the minimum value trump card which is greater than the highest value trump card already played current round', () => {
@@ -372,5 +372,30 @@ describe('deck of cards test case', () => {
     expect(indexToPlay).to.be.eql(12);
   });
 
-  // xit('findOptimumCardMatchingSuiteOfHand should play the min value of suite of hand if there ', () => { });
+  // missing cases -
+  // having a suite of hand put min if you can’t win
+  // In all other cases, put the least face value card, preferably non trump
+
+  it('findOptimumCardMatchingSuiteOfHand should play the card of the max face value but not of trump suite in case of equal face values when starting the round', () => {
+    const currentRound = [];
+    const trumpSuite = 'SPADES';
+    const hand = [
+      { value: 5, suite: 'SPADES' },
+      { value: 4, suite: 'DIAMONDS' },
+      { value: 5, suite: 'SPADES' },
+    ];
+    const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
+    expect(indexToPlay).to.be.eql(0);
+  });
+  xit('findOptimumCardMatchingSuiteOfHand should play the card of the max face value even trump card value when starting the round', () => {
+    const currentRound = [];
+    const trumpSuite = 'SPADES';
+    const hand = [
+      { value: 3, suite: 'CLUBS' },
+      { value: 3, suite: 'SPADES' },
+      { value: 5, suite: 'HEARTS' },
+    ];
+    const indexToPlay = findIndexOfOptimumCardToPlay(hand, currentRound, trumpSuite);
+    expect(indexToPlay).to.be.eql(1);
+  });
 });
